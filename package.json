@@ -1,0 +1,29 @@
+{
+  "name": "nsupload",
+  "version": "0.0.0",
+  "description": "A node package to upload files to netsuite.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "dev@truecloud.com",
+  "license": "MIT",
+  "dependencies": {
+    "request": "^2.47.0",
+    "underscore": "^1.7.0"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "https://git.astuart.co/truecloud/nsupload"
+  },
+  "keywords": [
+    "netsuite",
+    "upload",
+    "file"
+  ],
+  "bugs": {
+    "url": "https://git.astuart.co/truecloud/nsupload/issues"
+  },
+  "homepage": "https://git.astuart.co/truecloud/nsupload"
+}

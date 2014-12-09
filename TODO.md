@@ -1,0 +1,2 @@
+- Finish README
+- Add path helper (in case of name collision)
