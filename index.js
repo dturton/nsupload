@@ -9,7 +9,7 @@ var url;
 var AUTH_STRING = 'NLAuth  nlauth_account=<%= account %>, nlauth_email=<%= email %>, nlauth_signature=<%= password %>';
 
 //Catch files
-function sendFile (file) {
+module.exports = function sendFile (file) {
   var authHeader = _.template(AUTH_STRING)(config);
 
   //Upload them to netsuite by name
@@ -45,18 +45,4 @@ function sendFile (file) {
       }
     });
   }
-}
-
-module.exports = function(options) {
-  options.domain = options.domain || 'rest.sandbox.netsuite.com';
-
-  url = _.template(URL_TEMPLATE)(options);
-  if(!(options && options.email && options.password && options.account && options.script)) {
-    throw new Error('Options are required. Please provide {email:\'\', password:\'\', account: 123, script:123}');
-  }
-
-  config = options;
-  return through(sendFile);
 };
-
-module.exports.send = sendFile;
