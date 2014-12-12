@@ -16,7 +16,7 @@
   "devDependencies": {},
   "repository": {
     "type": "git",
-    "url": "https://git.astuart.co/truecloud/nsupload"
+    "url": "https://github.com/truecloud-com/nsupload"
   },
   "keywords": [
     "netsuite",
@@ -24,7 +24,7 @@
     "file"
   ],
   "bugs": {
-    "url": "https://git.astuart.co/truecloud/nsupload/issues"
+    "url": "https://github.com/truecloud-com/nsupload/issues"
   },
-  "homepage": "https://git.astuart.co/truecloud/nsupload"
+  "homepage": "https://github.com/truecloud-com/nsupload"
 }
