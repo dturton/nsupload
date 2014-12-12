@@ -1,6 +1,7 @@
 var request = require('request')
   , _ = require('underscore')
   , q = require('q')
+  , fs = require('fs')
   , path = require('path');
 
 var URL_TEMPLATE = 'https://<%= domain %>/app/site/hosting/restlet.nl';
@@ -60,12 +61,10 @@ var AUTH_STRING = 'NLAuth  nlauth_account=<%= account %>, nlauth_email=<%= email
  * @description A function to set the configuration for nsuploader.
  */
 
+var config;
+
 //Catch files
-module.exports = function sendFile (file, cb) {
-  var nsuploader = this;
-
-  var config = nsuploader.config;
-
+module.exports = function sendFile (filePath, cb) {
   if(!config) {
     throw new Error('nsupload module not configured. Please use nsupload.config to set configuration.');
   } else if(!(config.email && config.password && config.account && config.script)) {
@@ -74,7 +73,8 @@ module.exports = function sendFile (file, cb) {
 
   cb = cb || function nop(){};
 
-  var authHeader = _.template(AUTH_STRING)(nsuploader.config);
+  url = _.template(URL_TEMPLATE)(config);
+  var authHeader = _.template(AUTH_STRING)(config);
   var deferred = q.defer();
 
   var e;
@@ -109,16 +109,16 @@ module.exports = function sendFile (file, cb) {
         uri: url,
         qs: {
           deploy: 1,
-          script: nsuploader.config.script
+          script: config.script
         },
-        method: nsuploader.config.method || 'PUT',
+        method: config.method || 'PUT',
         headers: {
           Authorization: authHeader
         },
         json: {
           name: fileName,
           path: filePath,
-          content: data.toString('base64')
+          content: data.toString()
         }
       }, function(err, res, data) {
         if(err || !res) {
@@ -152,11 +152,11 @@ module.exports = function sendFile (file, cb) {
   return deferred.promise;
 };
 
-module.exports.config = function(config) {
-  config.domain = config.domain || 'rest.sandbox.netsuite.com';
+module.exports.config = function(_config) {
+  _config.domain = _config.domain || 'rest.sandbox.netsuite.com';
 
-  if(config) {
-    this.config = config;
+  if(_config) {
+    config = _config;
   } else {
     throw new Error('nsuploader: Invalid config specified');
   }
