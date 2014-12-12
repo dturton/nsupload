@@ -1,7 +1,9 @@
 # nsupload
 ### A node module for uploading to netsuite
 
-If your filename is unique, nsupload will upload it to netsuite for you. Recommended for use with watch.
+If your filename is unique, nsupload will upload it to netsuite for you. Recommended and designed
+for use with a build system ([grunt](/gruntjs/grunt)/[gulp](/gulpjs/gulp)) that can
+auto-watch your files for changes.
 
 ## Installation
 
@@ -14,12 +16,25 @@ restful anyway (no semantic URI), so use a POST if you like it better.
 
 
 ```javascript
-var upload = require('nsupload');
+var sendToNetsuite = require('nsupload')
+  .config({
+    email: 'admin@example.com',
+    password: 'Password01', //DON'T USE THIS EVER. PLEASE.
+    account: 1234,
+    script: 12
+  });
 
-gulp.src('foo.js').pipe(upload({
-  email: 'a@example.com',
-  password: 'password',
-  account: 1234,
-  script: 1234
-}));
+sendToNetsuite('./foo.js', function(err, body) {
+  //Check for errors
+
+  console.log('Success!');
+  console.log(body);
+});
+
+sendToNetsuite('./foo.js').then(function handleSuccess(body) {
+  console.log('Success again!');
+  console.log(body);
+}, function handleError(e) {
+  console.log('Error:\n\t' + e.toString());
+});
 ```
