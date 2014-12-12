@@ -152,7 +152,7 @@ module.exports = function sendFile (file, cb) {
   return deferred.promise;
 };
 
-exports.config = function(config) {
+module.exports.config = function(config) {
   config.domain = config.domain || 'rest.sandbox.netsuite.com';
 
   if(config) {
