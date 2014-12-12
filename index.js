@@ -55,6 +55,7 @@ var AUTH_STRING = 'NLAuth  nlauth_account=<%= account %>, nlauth_email=<%= email
  * - password - The password for the same user
  * - account - The netsuite account number (get from Setup > Integration > Webservices)
  * - script - The script ID of the deployed restlet.
+ * - [domain] - Optional domain root for your nestuite instance. Defaults to rest.sandbox.netsuite.com
  * - [method] - The HTTP verb you've associated the restlet function with. Should be PUT or POST for obvious reasons.
  * @description A function to set the configuration for nsuploader.
  */
@@ -152,6 +153,8 @@ module.exports = function sendFile (file, cb) {
 };
 
 exports.config = function(config) {
+  config.domain = config.domain || 'rest.sandbox.netsuite.com';
+
   if(config) {
     this.config = config;
   } else {
