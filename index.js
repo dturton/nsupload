@@ -63,8 +63,12 @@ var AUTH_STRING = 'NLAuth  nlauth_account=<%= account %>, nlauth_email=<%= email
 module.exports = function sendFile (file, cb) {
   var nsuploader = this;
 
-  if(!nsuploader.config) {
+  var config = nsuploader.config;
+
+  if(!config) {
     throw new Error('nsupload module not configured. Please use nsupload.config to set configuration.');
+  } else if(!(config.email && config.password && config.account && config.script)) {
+    throw new Error('nsupload:\n\t Please include email, password, account, and script properties in configuration');
   }
 
   cb = cb || function nop(){};
@@ -147,9 +151,9 @@ module.exports = function sendFile (file, cb) {
   return deferred.promise;
 };
 
-exports.nsuploader.config = function(config) {
+exports.config = function(config) {
   if(config) {
-    this.config = nsuploader.config;
+    this.config = config;
   } else {
     throw new Error('nsuploader: Invalid config specified');
   }
