@@ -126,11 +126,9 @@ module.exports = function sendFile (filePath, cb) {
 
           cb(e);
           deferred.reject(e);
-        } else if(res.body && res.body.statusCode && res.body.statusCode !== 200){
-          e = new Error(res.body);
-
-          cb(e);
-          deferred.reject(e);
+        } else if(res.body && !res.body.error && res.body.statusCode && res.body.statusCode !== 200){
+          cb(res.body);
+          deferred.reject(res.body);
         } else {
           //Netsuite is a bit non-standard in their use of HTTP status codes and headers. This may not work, e.g. when the
           //file does not exist on netsuite.
